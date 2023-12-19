@@ -1,5 +1,8 @@
 const puppeteer = require("puppeteer");
 const cheerio = require("cheerio");
+const express = require("express");
+
+const app = express();
 
 async function run() {
   const browser = await puppeteer.launch({
@@ -25,17 +28,6 @@ async function run() {
   // Cheerio를 사용하여 페이지의 HTML을 분석합니다.
   const $ = cheerio.load(content);
 
-  // Cheerio를 사용하여 원하는 데이터를 추출합니다.
-  //   const selectedValue = $(
-  //     "#root > div > div.w-full.h-full.py-8.bg-blue-100.pt-24.px-8.gap-4.flex.flex-wrap.justify-between.ml-56 > div:nth-child(3) > div.w-full.h-full.flex.items-center.gap-4.rounded-lg.justify-between > div:nth-child(1)",
-  //   );
-
-  //   // 추출된 데이터를 출력합니다.
-  //   console.log(
-  //     "#root > div > div.w-full.h-full.py-8.bg-blue-100.pt-24.px-8.gap-4.flex.flex-wrap.justify-between.ml-56 > div:nth-child(3) > div.w-full.h-full.flex.items-center.gap-4.rounded-lg.justify-between > div:nth-child(1)",
-  //     selectedValue.text(),
-  //   );
-
   const searchText = "취소/반품/교환"; // 여기에 원하는 텍스트를 입력합니다.
   const selectedElement = $(`:contains("${searchText}"):last`); // 해당 텍스트를 포함하는 엘리먼트를 선택합니다.
   //   console.log(selectedElement.html());
@@ -46,3 +38,5 @@ async function run() {
   await browser.close();
 }
 run();
+
+app.listen(3000);
